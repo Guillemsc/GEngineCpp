@@ -3,8 +3,9 @@
 //
 
 #include "Engine.h"
+#include "spdlog/spdlog.h"
 
 void Engine::DoSomething()
 {
-
+    spdlog::info("Welcome to spdlog!");
 }

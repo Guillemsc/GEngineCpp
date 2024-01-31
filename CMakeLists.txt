@@ -7,4 +7,8 @@ add_library(GEngine
         src/Engine.cpp
         src/Engine.h)
 
+add_subdirectory(external)
+
+target_link_libraries(GEngine GEngineExternal)
+
 target_include_directories(GEngine PUBLIC src)
