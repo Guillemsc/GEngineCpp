@@ -6,7 +6,7 @@ GEngine is a small and lightweight C++ toy engine designed for educational purpo
 
 ## Features
 
-- **Entities as components architecture** Similar to what Godot does, entities use inheritance to build behaviour.
+- **Entities as components architecture:** Similar to what Godot does, entities use inheritance to build behaviour.
 
 - **Rendering:** Basic rendering capabilities using Raylib for quick and easy graphics.
 
