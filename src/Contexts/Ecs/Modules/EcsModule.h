@@ -16,7 +16,7 @@ class Entity;
 
 namespace GEngine
 {
-    class EcsModule : Module
+    class EcsModule : public Module
     {
     public:
         void Add(const std::shared_ptr<Entity> &entity);

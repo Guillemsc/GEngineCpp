@@ -8,6 +8,12 @@
 
 namespace GEngine
 {
+    GEngineBootstrap::GEngineBootstrap()
+    {
+        _ecsModule = std::make_shared<EcsModule>();
+        _modules.push_back(std::static_pointer_cast<Module>(_ecsModule));
+    }
+
     void GEngineBootstrap::Init()
     {
         spdlog::info("Welcome to spdlog!");
@@ -28,5 +34,10 @@ namespace GEngine
     bool GEngineBootstrap::ShouldTick()
     {
         return false;
+    }
+
+    std::shared_ptr<EcsModule> GEngineBootstrap::GetEcs() const
+    {
+        return _ecsModule;
     }
 }

@@ -34,8 +34,11 @@ namespace GEngine
         void AddChild(const std::shared_ptr<Entity>& child);
         [[nodiscard]] bool IsEntityOnChildHierarchy(const std::shared_ptr<Entity>& parent) const;
 
+        void SetActive(bool active);
+
     private:
         void SetOnTree(bool onTree);
+        void SetActiveOnTree(bool activeOnTree);
 
     private:
         std::string _name = "Entity";
@@ -44,6 +47,8 @@ namespace GEngine
         std::vector<std::shared_ptr<Entity>> _childs;
 
         bool _onTree = false;
+        bool _active = true;
+        bool _activeOnTree = false;
     };
 }
 

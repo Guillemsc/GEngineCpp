@@ -58,6 +58,7 @@ namespace GEngine
         this->_parent = parent;
 
         SetOnTree(parent->_onTree);
+        SetActiveOnTree(parent->_activeOnTree);
     }
 
     void Entity::RemoveParent()
@@ -80,6 +81,7 @@ namespace GEngine
 
         _parent->reset();
 
+        SetActiveOnTree(false);
         SetOnTree(false);
     }
 
@@ -113,6 +115,12 @@ namespace GEngine
         child->SetParent(shared_from_this());
     }
 
+    void Entity::SetActive(bool active)
+    {
+        _active = active;
+        SetActiveOnTree(_active);
+    }
+
     void Entity::SetOnTree(bool onTree)
     {
         if(onTree == _onTree)
@@ -128,6 +136,46 @@ namespace GEngine
             Entity* checking = toCheck.front();
 
             checking->_onTree = onTree;
+
+            toCheck.erase(toCheck.begin());
+
+            for (const std::shared_ptr<Entity>& child : checking->_childs)
+            {
+                toCheck.push_back(child.get());
+            }
+        }
+    }
+
+    void Entity::SetActiveOnTree(bool activeOnTree)
+    {
+        if(_activeOnTree == activeOnTree)
+        {
+            return;
+        }
+
+        std::vector<Entity*> toCheck;
+        toCheck.push_back(this);
+
+        while(!toCheck.empty())
+        {
+            Entity* checking = toCheck.front();
+
+            bool parentActive = _active;
+
+            if(checking->_parent.has_value())
+            {
+                parentActive = checking->_parent->get()->_activeOnTree;
+            }
+
+            bool newState = parentActive && checking->_active;
+            bool stateChanged = newState != checking->_activeOnTree;
+
+            if(!stateChanged)
+            {
+                continue;
+            }
+
+            checking->_activeOnTree = newState;
 
             toCheck.erase(toCheck.begin());
 

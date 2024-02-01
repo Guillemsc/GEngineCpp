@@ -16,6 +16,7 @@ namespace GEngine
         entity->RemoveParent();
 
         entity->SetOnTree(true);
+        entity->SetActiveOnTree(entity->_active);
 
         _rootEntities.push_back(entity);
     }
