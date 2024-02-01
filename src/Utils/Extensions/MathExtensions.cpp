@@ -10,12 +10,12 @@ namespace GEngine
 {
     float MathExtensions::RadiansToDegrees(float radians)
     {
-        return radians * (180.0f / (float)M_PI);
+        return radians * (180.0f / Pi);
     }
 
     float MathExtensions::DegreesToRadians(float degrees)
     {
-        return degrees * ((float)M_PI / 180.0f);
+        return degrees * (Pi / 180.0f);
     }
 
     Vector3 MathExtensions::RadiansToDegrees(Vector3 radians)

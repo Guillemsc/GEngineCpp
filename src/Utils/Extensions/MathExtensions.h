@@ -16,6 +16,9 @@ namespace GEngine
         static float DegreesToRadians(float degrees);
         static Vector3 RadiansToDegrees(Vector3 radians);
         static Vector3 DegreesToRadians(Vector3 radians);
+
+    private:
+        constexpr const static float Pi = 3.14159265358979323846f;
     };
 } // GEngine
 
