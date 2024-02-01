@@ -1,3 +1,5 @@
+[![CMake on multiple platforms](https://github.com/Guillemsc/GEngineCpp/actions/workflows/build-cmake-multi-platform.yml/badge.svg)](https://github.com/Guillemsc/GEngineCpp/actions/workflows/build-cmake-multi-platform.yml)
+
 # GEngine
 
 GEngine is a small and lightweight C++ toy engine designed for educational purposes. It provides a simple framework for experimenting with basic game development concepts.
