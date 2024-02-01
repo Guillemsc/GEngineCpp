@@ -1,4 +1,4 @@
-[![CMake on multiple platforms](https://github.com/Guillemsc/GEngineCpp/actions/workflows/build-cmake-multi-platform.yml/badge.svg)](https://github.com/Guillemsc/GEngineCpp/actions/workflows/build-cmake-multi-platform.yml)
+[![CMake on multiple platforms](https://github.com/Guillemsc/GEngineCpp/workflows/CMakeOnMultiplePlatforms/badge.svg)](https://github.com/Guillemsc/GEngineCpp/actions/workflows/build-cmake-multi-platform.yml)
 
 # GEngine
 
