@@ -4,26 +4,49 @@
 
 #include "Entity.h"
 #include <algorithm>
-#include <utility>
 
 namespace GEngine
 {
-    std::shared_ptr<Entity> Entity::Create()
+    Entity::Entity(const Engine* engine)
     {
-        return std::make_shared<Entity>();
+        _engine = engine;
     }
 
-    std::shared_ptr<Entity> Entity::Create(const std::string &name)
+    Entity::Entity(const Engine* engine, EntityType type)
     {
-        const std::shared_ptr<Entity>& newEntity = Create();
-        newEntity->SetName(name);
-        return newEntity;
+        _engine = engine;
+        _type = type;
     }
 
     void Entity::Dispose()
     {
-        _childs.clear();
-        _parent.reset();
+        if(_locked)
+        {
+            return;
+        }
+
+        std::vector<std::shared_ptr<Entity>> toCheck;
+        toCheck.push_back(shared_from_this());
+
+        while(!toCheck.empty())
+        {
+            std::shared_ptr<Entity> checking = toCheck.front();
+
+            checking->RemoveParent();
+
+            toCheck.erase(toCheck.begin());
+
+            for (const std::shared_ptr<Entity>& child : checking->_childs)
+            {
+                toCheck.push_back(child);
+            }
+
+            checking->_childs.clear();
+            checking->_parent.reset();
+            checking->_enterTreeEvent.Clear();
+            checking->_exitTreeEvent.Clear();
+            checking->_disposed = true;
+        }
     }
 
     void Entity::SetName(const std::string& name)
@@ -31,8 +54,18 @@ namespace GEngine
         _name = name;
     }
 
+    EntityType Entity::GetType() const
+    {
+        return _type;
+    }
+
     void Entity::SetParent(const std::shared_ptr<Entity>& parent)
     {
+        if(parent->_disposed || _disposed || _locked)
+        {
+            return;
+        }
+
         bool isOnChildHierarchy = IsEntityOnChildHierarchy(parent);
 
         if(isOnChildHierarchy)
@@ -43,6 +76,13 @@ namespace GEngine
         if(_parent.has_value())
         {
             const std::shared_ptr<Entity>& previousParent = _parent.value();
+
+            bool isSameParent = previousParent == parent;
+
+            if(isSameParent)
+            {
+                return;
+            }
 
             for(auto it = previousParent->_childs.begin(); it != previousParent->_childs.end() ; ++it)
             {
@@ -56,6 +96,8 @@ namespace GEngine
 
         parent->_childs.push_back(shared_from_this());
         this->_parent = parent;
+
+        _parentChangedEvent.Trigger();
 
         SetOnTree(parent->_onTree);
         SetActiveOnTree(parent->_activeOnTree);
@@ -79,10 +121,17 @@ namespace GEngine
             }
         }
 
-        _parent->reset();
+        _parent.reset();
+
+        _parentChangedEvent.Trigger();
 
         SetActiveOnTree(false);
         SetOnTree(false);
+    }
+
+    std::optional<std::shared_ptr<Entity>> Entity::GetParent() const
+    {
+        return _parent;
     }
 
     bool Entity::IsEntityOnChildHierarchy(const std::shared_ptr<Entity>& entity) const
@@ -112,13 +161,33 @@ namespace GEngine
 
     void Entity::AddChild(const std::shared_ptr<Entity> &child)
     {
+        if(_disposed)
+        {
+            return;
+        }
+
         child->SetParent(shared_from_this());
+    }
+
+    std::vector<std::shared_ptr<Entity>> Entity::GetChilds() const
+    {
+        return _childs;
     }
 
     void Entity::SetActive(bool active)
     {
+        if(_locked || _disposed)
+        {
+            return;
+        }
+
         _active = active;
         SetActiveOnTree(_active);
+    }
+
+    bool Entity::IsActiveOnTree() const
+    {
+        return _activeOnTree;
     }
 
     void Entity::SetOnTree(bool onTree)
@@ -134,10 +203,25 @@ namespace GEngine
         while(!toCheck.empty())
         {
             Entity* checking = toCheck.front();
+            toCheck.erase(toCheck.begin());
+
+            bool stateChanged = checking->_onTree != onTree;
+
+            if(!stateChanged)
+            {
+                continue;
+            }
 
             checking->_onTree = onTree;
 
-            toCheck.erase(toCheck.begin());
+            if(checking->_onTree)
+            {
+                checking->_enterTreeEvent.Trigger();
+            }
+            else
+            {
+                checking->_exitTreeEvent.Trigger();
+            }
 
             for (const std::shared_ptr<Entity>& child : checking->_childs)
             {
@@ -153,12 +237,20 @@ namespace GEngine
             return;
         }
 
+        bool cannotActivate = activeOnTree && !_onTree;
+
+        if(cannotActivate)
+        {
+            return;
+        }
+
         std::vector<Entity*> toCheck;
         toCheck.push_back(this);
 
         while(!toCheck.empty())
         {
             Entity* checking = toCheck.front();
+            toCheck.erase(toCheck.begin());
 
             bool parentActive = _active;
 
@@ -177,12 +269,24 @@ namespace GEngine
 
             checking->_activeOnTree = newState;
 
-            toCheck.erase(toCheck.begin());
+            if(newState)
+            {
+                _activatedOnTreeEvent.Trigger();
+            }
+            else
+            {
+                _deactivatedOnTreeEvent.Trigger();
+            }
 
             for (const std::shared_ptr<Entity>& child : checking->_childs)
             {
                 toCheck.push_back(child.get());
             }
         }
+    }
+
+    void Entity::Tick()
+    {
+        _tickEvent.Trigger();
     }
 } // GEngine

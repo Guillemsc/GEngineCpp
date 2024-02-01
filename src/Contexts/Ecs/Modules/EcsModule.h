@@ -5,26 +5,47 @@
 #ifndef GENGINEGAME_ECSMODULE_H
 #define GENGINEGAME_ECSMODULE_H
 
-#include "Contexts/General/Module.h"
+#include "Contexts/General/Modules/Module.h"
 
 #include <vector>
 #include <memory>
+#include <string>
 
-#include "Contexts/Ecs/Entities/Entity.h"
-
-class Entity;
+#include "Contexts/Ecs/Enums/EntityType.h"
 
 namespace GEngine
 {
+    class Entity;
+    class Entity3D;
+
     class EcsModule : public Module
     {
     public:
-        void Add(const std::shared_ptr<Entity> &entity);
+        explicit EcsModule(const Engine* engine);
+        ~EcsModule();
+
+        [[nodiscard]] std::shared_ptr<Entity> GetRoot() const;
+
+        std::shared_ptr<Entity> Create(EntityType entityType, const std::string& name = "Entity");
+        template<typename T>
+        std::shared_ptr<T> Create(EntityType entityType, const std::string& name = "Entity");
+        template<typename T>
+        std::shared_ptr<T> Create(const std::string& name = "Entity");
+
+    protected:
+        void Tick() override;
 
     private:
-        std::vector<std::shared_ptr<Entity>> _rootEntities;
+        void TickEntities();
+
+        std::shared_ptr<Entity> CreateByType(EntityType entityType);
+
+    private:
+        std::shared_ptr<Entity> _rootEntity;
     };
 
 } // GEngine
+
+#include "Contexts/Ecs/Modules/EcsModule.tpp"
 
 #endif //GENGINEGAME_ECSMODULE_H
