@@ -25,9 +25,9 @@ namespace GEngine
         bool ShouldTick();
         void Dispose();
 
-        [[nodiscard]] std::weak_ptr<WindowModule> GetWindow() const;
-        [[nodiscard]] std::weak_ptr<Renderer3DModule> GetRenderer3D() const;
-        [[nodiscard]] std::weak_ptr<EcsModule> GetEcs() const;
+        [[nodiscard]] WindowModule& GetWindow() const;
+        [[nodiscard]] Renderer3DModule& GetRenderer3D() const;
+        [[nodiscard]] EcsModule& GetEcs() const;
 
     private:
         std::vector<std::shared_ptr<Module>> _modules;

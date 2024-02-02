@@ -30,7 +30,10 @@ namespace GEngine
 
         void SetLocalScale(Vector3 localScale);
 
+        Matrix GetWorldMatrix() const;
         Vector3 GetWorldPosition() const;
+        Vector3 GetWorldRotationRadians() const;
+        Vector3 GetWorldScale();
 
     private:
         void RecalculateLocalMatrix();
@@ -49,22 +52,9 @@ namespace GEngine
 
         Vector3 _worldPosition = Vector3Zero();
         Quaternion _worldRotation = QuaternionIdentity();
-        Vector3 _worldRotationRadiants = Vector3Zero();
+        Vector3 _worldRotationRadians = Vector3Zero();
         Vector3 _worldRotationDegrees = Vector3Zero();
         Vector3 _worldScale = Vector3One();
-//
-//    public Vector3 LocalPosition { get; private set; }
-//    public Quaternion LocalRotation { get; private set; } = Quaternion.Identity;
-//    public Vector3 LocalRotationRadiants { get; private set; }
-//    public Vector3 LocalRotationDegrees { get; private set; }
-//    public Vector3 LocalScale { get; private set; } = Vector3.One;
-//
-//    public Vector3 WorldPosition { get; private set; }
-//    public Quaternion WorldRotation { get; private set; } = Quaternion.Identity;
-//    public Vector3 WorldRotationRadiants { get; private set; }
-//    public Vector3 WorldRotationDegrees { get; private set; }
-//    public Vector3 WorldScale { get; private set; } = Vector3.One;
-
     };
 } // GEngine
 

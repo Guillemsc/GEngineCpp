@@ -11,7 +11,7 @@ namespace GEngine
     {
         BASE,
         ENTITY_3D,
-        PRIMITIVE_RENDERER_3D,
+        BOX_PRIMITIVE_RENDERER_3D,
     };
 
 } // GEngine

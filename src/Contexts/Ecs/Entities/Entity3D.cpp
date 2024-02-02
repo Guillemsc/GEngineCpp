@@ -136,9 +136,24 @@ namespace GEngine
         RecalculateChildHirearchyWorldValues();
     }
 
+    Matrix Entity3D::GetWorldMatrix() const
+    {
+        return _worldMatrix;
+    }
+
     Vector3 Entity3D::GetWorldPosition() const
     {
         return _worldPosition;
+    }
+
+    Vector3 Entity3D::GetWorldRotationRadians() const
+    {
+        return _worldRotationRadians;
+    }
+
+    Vector3 Entity3D::GetWorldScale()
+    {
+        return _worldScale;
     }
 
     void Entity3D::RecalculateLocalMatrix()
@@ -169,8 +184,8 @@ namespace GEngine
 
         _worldPosition = { _worldMatrix.m12, _worldMatrix.m13, _worldMatrix.m14 };
         _worldRotation = QuaternionFromMatrix(_worldMatrix);
-        _worldRotationRadiants = QuaternionToEuler(_worldRotation);
-        _worldRotationDegrees = MathExtensions::RadiansToDegrees(_worldRotationRadiants);
+        _worldRotationRadians = QuaternionToEuler(_worldRotation);
+        _worldRotationDegrees = MathExtensions::RadiansToDegrees(_worldRotationRadians);
         _worldScale = { _worldMatrix.m0, _worldMatrix.m5, _worldMatrix.m10 };
 
         if(!Vector3Equals(previousWorldPosition, _worldPosition))

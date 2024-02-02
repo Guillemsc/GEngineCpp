@@ -6,7 +6,7 @@
 
 #include "Contexts/Ecs/Entities/Entity.h"
 #include "Contexts/Ecs/Entities/Entity3D.h"
-#include "Contexts/Ecs/Entities/PrimitiveRenderer3D.h"
+#include "Contexts/Ecs/Entities/BoxPrimitiveRenderer3D.h"
 
 namespace GEngine
 {
@@ -54,9 +54,9 @@ namespace GEngine
     }
 
     template<>
-    std::shared_ptr<PrimitiveRenderer3D> GEngine::EcsModule::Create<PrimitiveRenderer3D>(const std::string &name)
+    std::shared_ptr<BoxPrimitiveRenderer3D> GEngine::EcsModule::Create<BoxPrimitiveRenderer3D>(const std::string &name)
     {
-        return Create<PrimitiveRenderer3D>(EntityType::PRIMITIVE_RENDERER_3D, name);
+        return Create<BoxPrimitiveRenderer3D>(EntityType::BOX_PRIMITIVE_RENDERER_3D, name);
     }
 
     void EcsModule::TickEntities()
@@ -90,9 +90,9 @@ namespace GEngine
             {
                 return std::make_shared<Entity3D>(_engine);
             }
-            case PRIMITIVE_RENDERER_3D:
+            case BOX_PRIMITIVE_RENDERER_3D:
             {
-                return std::make_shared<PrimitiveRenderer3D>(_engine);
+                return std::make_shared<BoxPrimitiveRenderer3D>(_engine);
             }
             default:
             {

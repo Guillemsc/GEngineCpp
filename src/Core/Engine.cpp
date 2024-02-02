@@ -69,18 +69,18 @@ namespace GEngine
         _modules.clear();
     }
 
-    std::weak_ptr<WindowModule> Engine::GetWindow() const
+    WindowModule& Engine::GetWindow() const
     {
-        return _windowModule;
+        return *_windowModule;
     }
 
-    std::weak_ptr<Renderer3DModule> Engine::GetRenderer3D() const
+    Renderer3DModule& Engine::GetRenderer3D() const
     {
-        return _renderer3DModule;
+        return *_renderer3DModule;
     }
 
-    std::weak_ptr<EcsModule> Engine::GetEcs() const
+    EcsModule& Engine::GetEcs() const
     {
-        return _ecsModule;
+        return *_ecsModule;
     }
 }

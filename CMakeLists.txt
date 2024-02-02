@@ -27,8 +27,17 @@ add_library(gengine
         src/Contexts/General/RenderQueue/DrawCall.cpp
         src/Contexts/General/RenderQueue/DrawCall.h
         src/Contexts/General/Modules/Module.cpp
-        src/Contexts/Ecs/Entities/PrimitiveRenderer3D.cpp
-        src/Contexts/Ecs/Entities/PrimitiveRenderer3D.h)
+        src/Contexts/Ecs/Entities/BoxPrimitiveRenderer3D.cpp
+        src/Contexts/Ecs/Entities/BoxPrimitiveRenderer3D.h
+        src/Contexts/Ecs/Entities/MeshRenderer3D.cpp
+        src/Contexts/Ecs/Entities/MeshRenderer3D.h
+        src/Contexts/Data/Resources/Resource.cpp
+        src/Contexts/Data/Resources/Resource.h
+        src/Contexts/Data/ResourceOrigin/ResourceOrigin.cpp
+        src/Contexts/Data/ResourceOrigin/ResourceOrigin.h
+        src/Contexts/Data/Resources/MaterialResource.cpp
+        src/Contexts/Data/Resources/MaterialResource.h
+        src/Contexts/Data/Enums/MaterialResourceType.h)
 
 add_subdirectory(external)
 
