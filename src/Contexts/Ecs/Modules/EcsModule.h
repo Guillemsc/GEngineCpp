@@ -22,7 +22,6 @@ namespace GEngine
     {
     public:
         explicit EcsModule(const Engine* engine);
-        ~EcsModule();
 
         [[nodiscard]] std::shared_ptr<Entity> GetRoot() const;
 
@@ -33,7 +32,9 @@ namespace GEngine
         std::shared_ptr<T> Create(const std::string& name = "Entity");
 
     protected:
+        void Init() override;
         void Tick() override;
+        void Dispose() override;
 
     private:
         void TickEntities();

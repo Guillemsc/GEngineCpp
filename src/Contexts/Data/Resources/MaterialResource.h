@@ -10,11 +10,11 @@
 
 namespace GEngine
 {
-    class MaterialResource : Resource
+    class MaterialResource : public Resource
     {
     public:
         explicit MaterialResource(const ResourceOrigin& resourceOrigin, MaterialResourceType materialType);
-        MaterialResourceType GetMaterialType() const;
+        [[nodiscard]] MaterialResourceType GetMaterialType() const;
 
     private:
         MaterialResourceType _materialType;

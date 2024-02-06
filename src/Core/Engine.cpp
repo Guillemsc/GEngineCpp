@@ -11,6 +11,7 @@
 #include "Contexts/Window/Modules/WindowModule.h"
 #include "Contexts/Renderer3D/Modules/Renderer3DModule.h"
 #include "Contexts/Ecs/Modules/EcsModule.h"
+#include "Contexts/Data/Modules/DataModule.h"
 
 namespace GEngine
 {
@@ -21,6 +22,9 @@ namespace GEngine
 
         _renderer3DModule = std::make_shared<Renderer3DModule>(this);
         _modules.push_back(_renderer3DModule);
+
+        _dataModule = std::make_shared<DataModule>(this);
+        _modules.push_back(_dataModule);
 
         _ecsModule = std::make_shared<EcsModule>(this);
         _modules.push_back(_ecsModule);
@@ -77,6 +81,11 @@ namespace GEngine
     Renderer3DModule& Engine::GetRenderer3D() const
     {
         return *_renderer3DModule;
+    }
+
+    DataModule &Engine::GetData() const
+    {
+        return *_dataModule;
     }
 
     EcsModule& Engine::GetEcs() const

@@ -6,15 +6,20 @@
 #define GENGINEGAME_RESOURCE_H
 
 #include "Contexts/Data/ResourceOrigin/ResourceOrigin.h"
+#include "Contexts/Data/Enums/ResourceType.h"
 
 namespace GEngine
 {
     class Resource
     {
     public:
-        explicit Resource(const ResourceOrigin& resourceOrigin);
+        explicit Resource(ResourceType resourceType, const ResourceOrigin& resourceOrigin);
+
+        ResourceType GetResourceType() const;
+
 
     private:
+        ResourceType _resourceType;
         ResourceOrigin _resourceOrigin;
     };
 } // GEngine

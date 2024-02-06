@@ -6,8 +6,14 @@
 
 namespace GEngine
 {
-    Resource::Resource(const ResourceOrigin &resourceOrigin)
+    Resource::Resource(ResourceType resourceType, const ResourceOrigin &resourceOrigin)
     {
+        _resourceType = resourceType;
         _resourceOrigin = resourceOrigin;
+    }
+
+    ResourceType Resource::GetResourceType() const
+    {
+        return _resourceType;
     }
 } // GEngine

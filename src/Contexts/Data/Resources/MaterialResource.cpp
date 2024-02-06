@@ -6,7 +6,8 @@
 
 namespace GEngine
 {
-    MaterialResource::MaterialResource(const ResourceOrigin &resourceOrigin, MaterialResourceType materialType) : Resource(resourceOrigin)
+    MaterialResource::MaterialResource(const ResourceOrigin &resourceOrigin, MaterialResourceType materialType)
+        : Resource(ResourceType::MATERIAL, resourceOrigin)
     {
         _materialType = materialType;
     }

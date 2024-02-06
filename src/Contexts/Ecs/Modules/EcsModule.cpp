@@ -12,21 +12,26 @@ namespace GEngine
 {
     EcsModule::EcsModule(const Engine* engine) : Module(engine)
     {
+
+    }
+
+    void EcsModule::Init()
+    {
         _rootEntity = Create(EntityType::BASE, "Root");
         _rootEntity->_activeOnTree = true;
         _rootEntity->_onTree = true;
         _rootEntity->_locked = true;
     }
 
-    EcsModule::~EcsModule()
-    {
-        _rootEntity->_locked = false;
-        _rootEntity->Dispose();
-    }
-
     void EcsModule::Tick()
     {
         TickEntities();
+    }
+
+    void EcsModule::Dispose()
+    {
+        _rootEntity->_locked = false;
+        _rootEntity->Dispose();
     }
 
     std::shared_ptr<Entity> EcsModule::GetRoot() const
@@ -100,5 +105,4 @@ namespace GEngine
             }
         }
     }
-
 } // GEngine

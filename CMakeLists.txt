@@ -37,7 +37,22 @@ add_library(gengine
         src/Contexts/Data/ResourceOrigin/ResourceOrigin.h
         src/Contexts/Data/Resources/MaterialResource.cpp
         src/Contexts/Data/Resources/MaterialResource.h
-        src/Contexts/Data/Enums/MaterialResourceType.h)
+        src/Contexts/Data/Enums/MaterialResourceType.h
+        src/Contexts/Data/Modules/DataModule.cpp
+        src/Contexts/Data/Modules/DataModule.h
+        src/Contexts/Data/Resources/StandardMaterialResource.cpp
+        src/Contexts/Data/Resources/StandardMaterialResource.h
+        src/Contexts/Data/ResourceOrigin/InternalResourceOrigin.cpp
+        src/Contexts/Data/ResourceOrigin/InternalResourceOrigin.h
+        src/Contexts/Data/Resources/TextureResource.cpp
+        src/Contexts/Data/Resources/TextureResource.h
+        src/Contexts/Data/ResourceOrigin/FileSystemResourceOrigin.cpp
+        src/Contexts/Data/ResourceOrigin/FileSystemResourceOrigin.h
+        src/Contexts/Data/Enums/ResourceType.h
+        src/Contexts/Data/Resources/MeshResource.cpp
+        src/Contexts/Data/Resources/MeshResource.h
+        src/Contexts/Data/Resources/ModelResource.cpp
+        src/Contexts/Data/Resources/ModelResource.h)
 
 add_subdirectory(external)
 

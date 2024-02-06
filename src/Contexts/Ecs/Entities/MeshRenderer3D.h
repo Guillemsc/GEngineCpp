@@ -13,11 +13,15 @@
 namespace GEngine
 {
     class Engine;
+    class MaterialResource;
 
     class MeshRenderer3D : public Entity3D
     {
     public:
         explicit MeshRenderer3D(const Engine* engine);
+
+        void SetMaterial(MaterialResource& materialResource);
+        std::optional<std::reference_wrapper<MaterialResource>> GetMaterial() const;
 
     protected:
         void SetMesh(const Mesh& mesh);
@@ -29,6 +33,7 @@ namespace GEngine
 
     private:
         std::optional<Model> _model;
+        std::optional<std::reference_wrapper<MaterialResource>> _materialResource;
     };
 }
 
