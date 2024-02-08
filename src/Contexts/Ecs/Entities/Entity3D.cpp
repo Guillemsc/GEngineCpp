@@ -7,7 +7,7 @@
 
 namespace GEngine
 {
-    Entity3D::Entity3D(const Engine* engine) : Entity(engine, EntityType::ENTITY_3D)
+    Entity3D::Entity3D(const Engine* engine, EntityType entityType) : Entity(engine, entityType)
     {
 
     }

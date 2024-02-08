@@ -6,4 +6,8 @@
 
 namespace GEngine
 {
+    ResourceOrigin::ResourceOrigin(ResourceOriginType resourceOriginType) : _resourceOriginType(resourceOriginType)
+    {
+
+    }
 } // GEngine

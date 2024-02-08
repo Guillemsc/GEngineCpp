@@ -6,7 +6,8 @@
 
 namespace GEngine
 {
-    MeshResource::MeshResource(const ResourceOrigin &resourceOrigin) : Resource(ResourceType::MESH, resourceOrigin)
+    MeshResource::MeshResource(const Engine* engine, const ResourceOrigin &resourceOrigin)
+    : Resource(engine, ResourceType::MESH, resourceOrigin)
     {
 
     }

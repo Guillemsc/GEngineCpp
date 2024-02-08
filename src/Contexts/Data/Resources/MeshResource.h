@@ -13,10 +13,14 @@
 
 namespace GEngine
 {
+    class DataModule;
+
     class MeshResource : public Resource
     {
+        friend class DataModule;
+
     public:
-        explicit MeshResource(const ResourceOrigin& resourceOrigin);
+        explicit MeshResource(const Engine* engine, const ResourceOrigin& resourceOrigin);
 
         [[nodiscard]] std::optional<Mesh> GetMesh() const;
 

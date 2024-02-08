@@ -10,7 +10,7 @@ namespace GEngine
     enum MaterialResourceType
     {
         STANDARD,
-        SHADER
+        CUSTOM,
     };
 } // GEngine
 

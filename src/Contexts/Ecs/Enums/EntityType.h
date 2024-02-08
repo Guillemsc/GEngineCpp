@@ -12,6 +12,7 @@ namespace GEngine
         BASE,
         ENTITY_3D,
         BOX_PRIMITIVE_RENDERER_3D,
+        MESH_RESOURCE_RENDERER_3D,
     };
 
 } // GEngine

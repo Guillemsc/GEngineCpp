@@ -7,4 +7,8 @@
 namespace GEngine
 {
 
+    InternalResourceOrigin::InternalResourceOrigin() : ResourceOrigin(ResourceOriginType::INTERNAL)
+    {
+
+    }
 } // GEngine

@@ -14,7 +14,7 @@ namespace GEngine
     class BoxPrimitiveRenderer3D : public MeshRenderer3D
     {
     public:
-        explicit BoxPrimitiveRenderer3D(const Engine* engine);
+        explicit BoxPrimitiveRenderer3D(const Engine* engine, EntityType entityType);
 
     private:
         void RefreshMesh();

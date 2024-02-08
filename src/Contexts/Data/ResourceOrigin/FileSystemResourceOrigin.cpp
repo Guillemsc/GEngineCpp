@@ -4,14 +4,17 @@
 
 #include "FileSystemResourceOrigin.h"
 
+#include <utility>
+
 namespace GEngine
 {
-    FileSystemResourceOrigin::FileSystemResourceOrigin(const std::string &filepath)
+    FileSystemResourceOrigin::FileSystemResourceOrigin(std::string filepath)
+        : ResourceOrigin(ResourceOriginType::FILE_SYSTEM), _filepath(std::move(filepath))
     {
-        _filepath = filepath;
+
     }
 
-    std::string FileSystemResourceOrigin::GetFilepath()
+    std::string FileSystemResourceOrigin::GetFilepath() const
     {
         return _filepath;
     }

@@ -14,12 +14,12 @@ namespace GEngine
     class FileSystemResourceOrigin : public ResourceOrigin
     {
     public:
-        explicit FileSystemResourceOrigin(const std::string& filepath);
+        explicit FileSystemResourceOrigin(std::string  filepath);
 
-        std::string GetFilepath();
+        [[nodiscard]] std::string GetFilepath() const;
 
     private:
-        std::string _filepath;
+        const std::string _filepath;
     };
 } // GEngine
 

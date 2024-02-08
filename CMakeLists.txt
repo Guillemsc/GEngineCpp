@@ -22,10 +22,10 @@ add_library(gengine
         src/Contexts/Window/Modules/WindowModule.h
         src/Contexts/Renderer3D/Modules/Renderer3DModule.cpp
         src/Contexts/Renderer3D/Modules/Renderer3DModule.h
-        src/Contexts/General/RenderQueue/RenderQueue.cpp
-        src/Contexts/General/RenderQueue/RenderQueue.h
-        src/Contexts/General/RenderQueue/DrawCall.cpp
-        src/Contexts/General/RenderQueue/DrawCall.h
+        src/Contexts/Renderer3D/RenderQueue/RenderQueue3D.cpp
+        src/Contexts/Renderer3D/RenderQueue/RenderQueue3D.h
+        src/Contexts/Renderer3D/RenderQueue/DrawCall.cpp
+        src/Contexts/Renderer3D/RenderQueue/DrawCall.h
         src/Contexts/General/Modules/Module.cpp
         src/Contexts/Ecs/Entities/BoxPrimitiveRenderer3D.cpp
         src/Contexts/Ecs/Entities/BoxPrimitiveRenderer3D.h
@@ -52,7 +52,23 @@ add_library(gengine
         src/Contexts/Data/Resources/MeshResource.cpp
         src/Contexts/Data/Resources/MeshResource.h
         src/Contexts/Data/Resources/ModelResource.cpp
-        src/Contexts/Data/Resources/ModelResource.h)
+        src/Contexts/Data/Resources/ModelResource.h
+        src/Contexts/Data/ResourceOrigin/ChildResourceOrigin.cpp
+        src/Contexts/Data/ResourceOrigin/ChildResourceOrigin.h
+        src/Utils/Extensions/MapExtensions.cpp
+        src/Utils/Extensions/MapExtensions.h
+        src/Utils/Extensions/MapExtensions.tpp
+        src/Contexts/Data/Enums/ResourceOriginType.h
+        src/Contexts/Ecs/Entities/MeshResourceRenderer3D.cpp
+        src/Contexts/Ecs/Entities/MeshResourceRenderer3D.h
+        src/Contexts/Data/Resources/ShaderResource.cpp
+        src/Contexts/Data/Resources/ShaderResource.h
+        src/Contexts/Data/ResourceOrigin/CopyResourceOrigin.cpp
+        src/Contexts/Data/ResourceOrigin/CopyResourceOrigin.h
+        src/Contexts/Renderer3D/Lights/Light3D.cpp
+        src/Contexts/Renderer3D/Lights/Light3D.h
+        src/Contexts/Renderer3D/Enums/BaseShaderUniformLocations.h
+)
 
 add_subdirectory(external)
 

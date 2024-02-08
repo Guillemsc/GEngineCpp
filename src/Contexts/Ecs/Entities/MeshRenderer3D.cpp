@@ -4,98 +4,94 @@
 
 #include "MeshRenderer3D.h"
 
-#include "raylib.h"
-
 #include "Core/Engine.h"
 #include "Contexts/Renderer3D/Modules/Renderer3DModule.h"
 #include "Contexts/Data/Resources/StandardMaterialResource.h"
 #include "Contexts/Data/Modules/DataModule.h"
 #include "Contexts/Data/Resources/TextureResource.h"
+#include "Contexts/Data/Resources/MeshResource.h"
+#include "Contexts/Data/Resources/ShaderResource.h"
 
 namespace GEngine
 {
-    GEngine::MeshRenderer3D::MeshRenderer3D(const GEngine::Engine *engine) : Entity3D(engine)
+    GEngine::MeshRenderer3D::MeshRenderer3D(const GEngine::Engine *engine, EntityType entityType)
+        : Entity3D(engine, entityType)
     {
         _tickEvent.Subscribe([this](){ Tick(); });
     }
 
+    std::optional<std::reference_wrapper<MeshResource>> MeshRenderer3D::GetMesh() const
+    {
+        return _mesh;
+    }
+
     void MeshRenderer3D::SetMaterial(MaterialResource &materialResource)
     {
-        _materialResource = materialResource;
+        _material = materialResource;
     }
 
     std::optional<std::reference_wrapper<MaterialResource>> MeshRenderer3D::GetMaterial() const
     {
-        return _materialResource;
+        return _material;
     }
 
-    void MeshRenderer3D::SetMesh(const Mesh &mesh)
+    void MeshRenderer3D::SetMeshInternal(MeshResource& meshResource)
     {
-        _model = LoadModelFromMesh(mesh);
+        _mesh = meshResource;
     }
 
     void MeshRenderer3D::ClearMesh()
     {
-        _model.reset();
+        _mesh.reset();
+    }
+
+    bool MeshRenderer3D::HasMesh() const
+    {
+        return _mesh.has_value();
     }
 
     void MeshRenderer3D::Tick()
     {
-        _engine->GetRenderer3D().AddToRenderQueue(1, [this](){ Render(); });
+        _engine->GetRenderer3D().AddToRenderQueue(1, [this](const Camera3D& camera){ Render(camera); });
     }
 
-    void MeshRenderer3D::Render()
+    void MeshRenderer3D::Render(const Camera3D& camera)
     {
-        if(!_model.has_value())
+        if(!_mesh.has_value())
         {
             return;
         }
 
-        Color albedoColor = WHITE;
-        std::optional<Texture> albedoTexture;
+        MeshResource& meshResource = _mesh.value();
 
-        if(!_materialResource.has_value())
+        std::optional<Mesh> optionalMesh = meshResource.GetMesh();
+
+        if(!optionalMesh.has_value())
         {
-            const StandardMaterialResource defaultMaterial = _engine->GetData().GetDefaultMaterial();
-
-            albedoColor = defaultMaterial.GetAlbedoColor();
-        }
-        else
-        {
-            MaterialResource& materialResource = _materialResource->get();
-
-            if(materialResource.GetMaterialType() == MaterialResourceType::STANDARD)
-            {
-                StandardMaterialResource& standardMaterial = static_cast<StandardMaterialResource&>(materialResource);
-
-                albedoColor = standardMaterial.GetAlbedoColor();
-
-                std::optional<std::reference_wrapper<TextureResource>> optionalAlbedoTextureResource = standardMaterial.GetAlbedoTexture();
-
-                if(optionalAlbedoTextureResource.has_value())
-                {
-                    albedoTexture = optionalAlbedoTextureResource->get().GetTexture();
-                }
-            }
+            return;
         }
 
-        Model model = _model.value();
+        StandardMaterialResource defaultMaterial = _engine->GetData().GetDefaultMaterial();
 
-        model.transform = GetWorldMatrix();
+        Matrix transform = GetWorldMatrix();
 
-        for (int i = 0; i < model.meshCount; i++)
+        MaterialResource* materialResource = &defaultMaterial;
+
+        if(_material.has_value())
         {
-            Mesh& mesh = model.meshes[i];
-            Material& material = model.materials[model.meshMaterial[i]];
-
-            material.maps[MATERIAL_MAP_ALBEDO].color = albedoColor;
-
-            if(albedoTexture.has_value())
-            {
-                material.maps[MATERIAL_MAP_ALBEDO].texture = albedoTexture.value();
-            }
-
-            DrawMesh(mesh, material, model.transform);
+            materialResource = &_material->get();
         }
+
+        if (materialResource->GetMaterialType() == MaterialResourceType::STANDARD)
+        {
+            StandardMaterialResource* standardMaterialResource = (StandardMaterialResource*)materialResource;
+
+            Vector4 ambient = { 0.4f, 0.4f, 0.4f, 1.0f };
+
+            standardMaterialResource->SetShaderVector3Value("viewPos", camera.position);
+            standardMaterialResource->SetShaderVector4Value("ambient", ambient);
+        }
+
+        _engine->GetRenderer3D().DrawMesh(meshResource, *materialResource, transform);
     }
 }

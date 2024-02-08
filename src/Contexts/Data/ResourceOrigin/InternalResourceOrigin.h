@@ -11,7 +11,8 @@ namespace GEngine
 {
     class InternalResourceOrigin : public ResourceOrigin
     {
-
+    public:
+        explicit InternalResourceOrigin();
     };
 
 } // GEngine

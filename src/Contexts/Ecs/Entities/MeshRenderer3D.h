@@ -8,32 +8,37 @@
 #include "Contexts/Ecs/Entities/Entity3D.h"
 
 #include <optional>
+
 #include "raylib.h"
 
 namespace GEngine
 {
     class Engine;
+    class MeshResource;
     class MaterialResource;
 
     class MeshRenderer3D : public Entity3D
     {
     public:
-        explicit MeshRenderer3D(const Engine* engine);
+        explicit MeshRenderer3D(const Engine* engine, EntityType entityType);
+
+        std::optional<std::reference_wrapper<MeshResource>> GetMesh() const;
 
         void SetMaterial(MaterialResource& materialResource);
         std::optional<std::reference_wrapper<MaterialResource>> GetMaterial() const;
 
     protected:
-        void SetMesh(const Mesh& mesh);
+        void SetMeshInternal(MeshResource& meshResource);
         void ClearMesh();
+        bool HasMesh() const;
 
     private:
         void Tick();
-        void Render();
+        void Render(const Camera3D& camera);
 
     private:
-        std::optional<Model> _model;
-        std::optional<std::reference_wrapper<MaterialResource>> _materialResource;
+        std::optional<std::reference_wrapper<MeshResource>> _mesh;
+        std::optional<std::reference_wrapper<MaterialResource>> _material;
     };
 }
 

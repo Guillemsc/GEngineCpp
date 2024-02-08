@@ -10,17 +10,29 @@
 
 namespace GEngine
 {
+    class Engine;
+
     class Resource
     {
+        friend class DataModule;
+
     public:
-        explicit Resource(ResourceType resourceType, const ResourceOrigin& resourceOrigin);
+        explicit Resource(const Engine* engine, ResourceType resourceType, const ResourceOrigin& resourceOrigin);
 
-        ResourceType GetResourceType() const;
-
+        [[nodiscard]] ResourceType GetResourceType() const;
+        [[nodiscard]] ResourceOrigin GetResourceOrigin() const;
+        [[nodiscard]] bool GetCanBeUnloaded() const;
 
     private:
-        ResourceType _resourceType;
-        ResourceOrigin _resourceOrigin;
+        void SetCanBeUnloaded(bool set);
+
+    protected:
+        const Engine* _engine;
+
+    private:
+        const ResourceType _resourceType;
+        const ResourceOrigin _resourceOrigin;
+        bool _canBeUnloaded = true;
     };
 } // GEngine
 

@@ -19,7 +19,7 @@ namespace GEngine
         friend DataModule;
 
     public:
-        explicit TextureResource(const ResourceOrigin& resourceOrigin);
+        explicit TextureResource(const Engine* engine, const ResourceOrigin& resourceOrigin);
 
         [[nodiscard]] std::optional<Texture2D> GetTexture() const;
 

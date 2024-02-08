@@ -6,17 +6,19 @@
 
 #include <utility>
 
+#include "raylib.h"
+
 namespace GEngine
 {
-    DrawCall::DrawCall(int priority, std::function<void()> callback)
+    DrawCall::DrawCall(int priority, std::function<void(const Camera3D& camera)> callback)
     {
         _priority = priority;
         _callback = std::move(callback);
     }
 
-    void DrawCall::Draw() const
+    void DrawCall::Draw(const Camera3D& camera) const
     {
-        _callback();
+        _callback(camera);
     }
 
     bool DrawCall::operator<(const DrawCall &other) const

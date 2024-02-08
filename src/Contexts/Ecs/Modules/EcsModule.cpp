@@ -6,6 +6,7 @@
 
 #include "Contexts/Ecs/Entities/Entity.h"
 #include "Contexts/Ecs/Entities/Entity3D.h"
+#include "Contexts/Ecs/Entities/MeshResourceRenderer3D.h"
 #include "Contexts/Ecs/Entities/BoxPrimitiveRenderer3D.h"
 
 namespace GEngine
@@ -59,6 +60,12 @@ namespace GEngine
     }
 
     template<>
+    std::shared_ptr<MeshResourceRenderer3D> GEngine::EcsModule::Create<MeshResourceRenderer3D>(const std::string &name)
+    {
+        return Create<MeshResourceRenderer3D>(EntityType::MESH_RESOURCE_RENDERER_3D, name);
+    }
+
+    template<>
     std::shared_ptr<BoxPrimitiveRenderer3D> GEngine::EcsModule::Create<BoxPrimitiveRenderer3D>(const std::string &name)
     {
         return Create<BoxPrimitiveRenderer3D>(EntityType::BOX_PRIMITIVE_RENDERER_3D, name);
@@ -93,11 +100,15 @@ namespace GEngine
             }
             case ENTITY_3D:
             {
-                return std::make_shared<Entity3D>(_engine);
+                return std::make_shared<Entity3D>(_engine, entityType);
+            }
+            case MESH_RESOURCE_RENDERER_3D:
+            {
+                return std::make_shared<MeshResourceRenderer3D>(_engine, entityType);
             }
             case BOX_PRIMITIVE_RENDERER_3D:
             {
-                return std::make_shared<BoxPrimitiveRenderer3D>(_engine);
+                return std::make_shared<BoxPrimitiveRenderer3D>(_engine, entityType);
             }
             default:
             {

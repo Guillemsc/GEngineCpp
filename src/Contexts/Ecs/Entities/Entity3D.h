@@ -17,7 +17,7 @@ namespace GEngine
     class Entity3D : public Entity
     {
     public:
-        explicit Entity3D(const Engine* engine);
+        explicit Entity3D(const Engine* engine, EntityType entityType);
         void SetLocalPosition(Vector3 localPosition);
         void SetWorldPosition(Vector3 worldPosition);
 

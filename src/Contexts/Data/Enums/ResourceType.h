@@ -13,6 +13,7 @@ namespace GEngine
         MATERIAL,
         MESH,
         MODEL,
+        SHADER,
     };
 } // GEngine
 

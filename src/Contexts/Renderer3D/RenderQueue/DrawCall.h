@@ -7,18 +7,20 @@
 
 #include <functional>
 
+struct Camera3D;
+
 namespace GEngine
 {
     class DrawCall
     {
     public:
-        DrawCall(int priority, std::function<void()> callback);
-        void Draw() const;
+        DrawCall(int priority, std::function<void(const Camera3D& camera)> callback);
+        void Draw(const Camera3D& camera) const;
         bool operator<(const DrawCall& other) const;
 
     private:
         int _priority = 0;
-        std::function<void()> _callback;
+        std::function<void(const Camera3D& camera)> _callback;
     };
 } // GEngine
 

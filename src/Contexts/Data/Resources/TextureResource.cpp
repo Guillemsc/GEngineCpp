@@ -6,7 +6,8 @@
 
 namespace GEngine
 {
-    TextureResource::TextureResource(const ResourceOrigin &resourceOrigin) : Resource(ResourceType::TEXTURE, resourceOrigin)
+    TextureResource::TextureResource(const Engine* engine, const ResourceOrigin &resourceOrigin)
+        : Resource(engine, ResourceType::TEXTURE, resourceOrigin)
     {
 
     }

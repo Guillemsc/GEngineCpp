@@ -19,7 +19,9 @@ namespace GEngine
 {
     class TextureResource;
     class StandardMaterialResource;
+    class ModelResource;
     class MeshResource;
+    class ShaderResource;
 
     class DataModule : public Module
     {
@@ -28,14 +30,27 @@ namespace GEngine
 
         [[nodiscard]] const StandardMaterialResource& GetDefaultMaterial() const;
 
+        TextureResource& CreateTextureResource(const ResourceOrigin& resourceOrigin);
         TextureResource& LoadTextureResource(const std::string& filepath);
         void UnloadTextureResource(TextureResource& textureResource);
 
-        StandardMaterialResource& CreateStandardMaterial();
+        StandardMaterialResource& CreateStandardMaterialResource(const ResourceOrigin& resourceOrigin);
+        StandardMaterialResource& DuplicateStandardMaterialResource(const StandardMaterialResource& materialResource);
 
-        MeshResource& LoadMeshResource(const std::string& filepath);
+        ModelResource& CreateModelResource(const ResourceOrigin& resourceOrigin);
+        ModelResource& LoadModelResource(const std::string& filepath);
+        void UnloadModelResource(ModelResource& modelResource);
+
+        MeshResource& CreateMeshResource(const ResourceOrigin& resourceOrigin);
+        void RefreshMeshResource(MeshResource& meshResource, Mesh mesh);
+        void UnloadMeshResource(MeshResource& meshResource);
+
+        ShaderResource& CreateShaderResource(const ResourceOrigin& resourceOrigin);
+        ShaderResource& LoadShaderResource(const std::string& vertexFilepath, const std::string& fragmentFilepath);
+        void UnloadShaderResource(ShaderResource& shaderResource);
 
     private:
+        void Init() override;
         void Dispose() override;
 
         void AddResource(const std::shared_ptr<Resource>& resource);
@@ -43,8 +58,7 @@ namespace GEngine
 
     private:
         std::map<ResourceType, std::vector<std::shared_ptr<Resource>>> _resources;
-
-        StandardMaterialResource _defaultMaterial = StandardMaterialResource(InternalResourceOrigin());
+        StandardMaterialResource _defaultMaterial;
     };
 } // GEngine
 

@@ -6,14 +6,29 @@
 
 namespace GEngine
 {
-    Resource::Resource(ResourceType resourceType, const ResourceOrigin &resourceOrigin)
+    Resource::Resource(const Engine* engine, ResourceType resourceType, const ResourceOrigin &resourceOrigin)
+    : _engine(engine), _resourceType(resourceType), _resourceOrigin(resourceOrigin)
     {
-        _resourceType = resourceType;
-        _resourceOrigin = resourceOrigin;
+
     }
 
     ResourceType Resource::GetResourceType() const
     {
         return _resourceType;
+    }
+
+    ResourceOrigin Resource::GetResourceOrigin() const
+    {
+        return _resourceOrigin;
+    }
+
+    bool Resource::GetCanBeUnloaded() const
+    {
+        return _canBeUnloaded;
+    }
+
+    void Resource::SetCanBeUnloaded(bool set)
+    {
+        _canBeUnloaded = set;
     }
 } // GEngine
