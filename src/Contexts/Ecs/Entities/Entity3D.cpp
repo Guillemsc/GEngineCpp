@@ -156,6 +156,16 @@ namespace GEngine
         return _worldScale;
     }
 
+    Vector3 Entity3D::GetWorldForward()
+    {
+        return Vector3
+        {
+            2 * (_worldRotation.x * _worldRotation.z + _worldRotation.w * _worldRotation.y),
+            2 * (_worldRotation.y * _worldRotation.z - _worldRotation.w * _worldRotation.x),
+            1 - 2 * (_worldRotation.x * _worldRotation.x + _worldRotation.y * _worldRotation.y)
+        };
+    }
+
     void Entity3D::RecalculateLocalMatrix()
     {
         _localMatrix = MatrixTranslate(_localPosition.x, _localPosition.y, _localPosition.z);

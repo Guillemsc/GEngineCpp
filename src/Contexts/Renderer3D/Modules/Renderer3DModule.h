@@ -23,7 +23,6 @@ namespace GEngine
         explicit Renderer3DModule(const Engine* engine);
 
         void AddToRenderQueue(int priority, std::function<void(const Camera3D& camera)> callback);
-
         void DrawMesh(const MeshResource& meshResource, MaterialResource& materialResource, Matrix transform);
 
     protected:

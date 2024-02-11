@@ -20,14 +20,14 @@ namespace GEngine
     class MeshRenderer3D : public Entity3D
     {
     public:
-        explicit MeshRenderer3D(const Engine* engine, EntityType entityType);
-
         std::optional<std::reference_wrapper<MeshResource>> GetMesh() const;
 
         void SetMaterial(MaterialResource& materialResource);
         std::optional<std::reference_wrapper<MaterialResource>> GetMaterial() const;
 
     protected:
+        explicit MeshRenderer3D(const Engine* engine, EntityType entityType);
+
         void SetMeshInternal(MeshResource& meshResource);
         void ClearMesh();
         bool HasMesh() const;

@@ -15,6 +15,7 @@ namespace GEngine
     class Renderer3DModule;
     class EcsModule;
     class DataModule;
+    class GameModule;
 
     class Engine
     {
@@ -30,6 +31,7 @@ namespace GEngine
         [[nodiscard]] Renderer3DModule& GetRenderer3D() const;
         [[nodiscard]] DataModule& GetData() const;
         [[nodiscard]] EcsModule& GetEcs() const;
+        [[nodiscard]] GameModule& GetGame() const;
 
     private:
         std::vector<std::shared_ptr<Module>> _modules;
@@ -38,6 +40,7 @@ namespace GEngine
         std::shared_ptr<Renderer3DModule> _renderer3DModule;
         std::shared_ptr<DataModule> _dataModule;
         std::shared_ptr<EcsModule> _ecsModule;
+        std::shared_ptr<GameModule> _gameModule;
     };
 }
 

@@ -8,6 +8,7 @@
 #include "Contexts/Ecs/Entities/Entity3D.h"
 #include "Contexts/Ecs/Entities/MeshResourceRenderer3D.h"
 #include "Contexts/Ecs/Entities/BoxPrimitiveRenderer3D.h"
+#include "Contexts/Ecs/Entities/DirectionalLight3D.h"
 
 namespace GEngine
 {
@@ -71,6 +72,22 @@ namespace GEngine
         return Create<BoxPrimitiveRenderer3D>(EntityType::BOX_PRIMITIVE_RENDERER_3D, name);
     }
 
+    template<>
+    std::shared_ptr<DirectionalLight3D> GEngine::EcsModule::Create<DirectionalLight3D>(const std::string &name)
+    {
+        return Create<DirectionalLight3D>(EntityType::DIRECTIONAL_LIGHT_3D, name);
+    }
+
+    void EcsModule::DisposeAll()
+    {
+        while(!_rootEntity->_childs.empty())
+        {
+            std::shared_ptr<Entity>& child = *_rootEntity->_childs.begin();
+
+            child->Dispose();
+        }
+    }
+
     void EcsModule::TickEntities()
     {
         std::vector<Entity*> toCheck;
@@ -109,6 +126,10 @@ namespace GEngine
             case BOX_PRIMITIVE_RENDERER_3D:
             {
                 return std::make_shared<BoxPrimitiveRenderer3D>(_engine, entityType);
+            }
+            case DIRECTIONAL_LIGHT_3D:
+            {
+                return std::make_shared<DirectionalLight3D>(_engine, entityType);
             }
             default:
             {

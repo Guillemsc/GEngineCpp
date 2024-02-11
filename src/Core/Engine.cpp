@@ -12,6 +12,7 @@
 #include "Contexts/Renderer3D/Modules/Renderer3DModule.h"
 #include "Contexts/Ecs/Modules/EcsModule.h"
 #include "Contexts/Data/Modules/DataModule.h"
+#include "Contexts/Game/Modules/GameModule.h"
 
 namespace GEngine
 {
@@ -28,6 +29,9 @@ namespace GEngine
 
         _ecsModule = std::make_shared<EcsModule>(this);
         _modules.push_back(_ecsModule);
+
+        _gameModule = std::make_shared<GameModule>(this);
+        _modules.push_back(_gameModule);
     }
 
     void Engine::Init()
@@ -91,5 +95,10 @@ namespace GEngine
     EcsModule& Engine::GetEcs() const
     {
         return *_ecsModule;
+    }
+
+    GameModule &Engine::GetGame() const
+    {
+        return *_gameModule;
     }
 }

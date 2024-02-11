@@ -35,6 +35,8 @@ namespace GEngine
         Vector3 GetWorldRotationRadians() const;
         Vector3 GetWorldScale();
 
+        Vector3 GetWorldForward();
+
     private:
         void RecalculateLocalMatrix();
         void RecalculateWorldValues();

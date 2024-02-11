@@ -12,12 +12,10 @@
 #include <string>
 
 #include "Contexts/Ecs/Enums/EntityType.h"
+#include "Contexts/Ecs/Entities/Entity.h"
 
 namespace GEngine
 {
-    class Entity;
-    class Entity3D;
-
     class EcsModule : public Module
     {
     public:
@@ -27,9 +25,12 @@ namespace GEngine
 
         std::shared_ptr<Entity> Create(EntityType entityType, const std::string& name = "Entity");
         template<typename T>
-        std::shared_ptr<T> Create(EntityType entityType, const std::string& name = "Entity");
-        template<typename T>
         std::shared_ptr<T> Create(const std::string& name = "Entity");
+
+        template<typename T>
+        std::vector<std::shared_ptr<T>> GetAll() const;
+
+        void DisposeAll();
 
     protected:
         void Init() override;
@@ -37,6 +38,9 @@ namespace GEngine
         void Dispose() override;
 
     private:
+        template<typename T>
+        std::shared_ptr<T> Create(EntityType entityType, const std::string& name = "Entity");
+
         void TickEntities();
 
         std::shared_ptr<Entity> CreateByType(EntityType entityType);

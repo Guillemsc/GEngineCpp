@@ -65,9 +65,17 @@ add_library(gengine
         src/Contexts/Data/Resources/ShaderResource.h
         src/Contexts/Data/ResourceOrigin/CopyResourceOrigin.cpp
         src/Contexts/Data/ResourceOrigin/CopyResourceOrigin.h
-        src/Contexts/Renderer3D/Lights/Light3D.cpp
-        src/Contexts/Renderer3D/Lights/Light3D.h
         src/Contexts/Renderer3D/Enums/BaseShaderUniformLocations.h
+        src/Contexts/Renderer3D/Enums/Light3DType.h
+        src/Contexts/Ecs/Entities/Light3D.cpp
+        src/Contexts/Ecs/Entities/Light3D.h
+        src/Contexts/Ecs/Entities/DirectionalLight3D.cpp
+        src/Contexts/Ecs/Entities/DirectionalLight3D.h
+        src/Contexts/Game/Modules/GameModule.cpp
+        src/Contexts/Game/Modules/GameModule.h
+        src/Contexts/Game/Modules/GameModule.h
+        src/Contexts/Game/Games/Game.cpp
+        src/Contexts/Game/Games/Game.h
 )
 
 add_subdirectory(external)

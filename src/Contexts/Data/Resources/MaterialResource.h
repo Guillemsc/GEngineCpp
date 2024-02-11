@@ -32,6 +32,7 @@ namespace GEngine
 
         int GetShaderValuePosition(const std::string& locationName);
 
+        void SetShaderIntValue(const std::string& locationName, int value);
         void SetShaderFloatValue(const std::string& locationName, float value);
         void SetShaderVector3Value(const std::string& locationName, Vector3 value);
         void SetShaderVector4Value(const std::string& locationName, Vector4 value);
@@ -59,6 +60,7 @@ namespace GEngine
     private:
         void ResetValuesFromLocations();
 
+        void SetShaderIntValue(int location, int value);
         void SetShaderFloatValue(int location, float value);
         void SetShaderVector3Value(int location, Vector3 value);
         void SetShaderVector4Value(int location, Vector4 value);
@@ -70,12 +72,14 @@ namespace GEngine
 
         std::optional<std::reference_wrapper<ShaderResource>> _shader;
 
+        std::map<std::string, int> _locationIntValues;
         std::map<std::string, float> _locationFloatValues;
         std::map<std::string, Vector3> _locationVector3Values;
         std::map<std::string, Vector4> _locationVector4Values;
         std::map<std::string, Matrix> _locationMatrixValues;
         std::map<std::string, Texture> _locationTextureValues;
 
+        std::map<int, int> _intValues;
         std::map<int, float> _floatValues;
         std::map<int, Vector3> _vector3Values;
         std::map<int, Vector4> _vector4Values;

@@ -6,11 +6,13 @@
 
 #include "Core/Engine.h"
 #include "Contexts/Renderer3D/Modules/Renderer3DModule.h"
+#include "Contexts/Ecs/Modules/EcsModule.h"
 #include "Contexts/Data/Resources/StandardMaterialResource.h"
 #include "Contexts/Data/Modules/DataModule.h"
 #include "Contexts/Data/Resources/TextureResource.h"
 #include "Contexts/Data/Resources/MeshResource.h"
 #include "Contexts/Data/Resources/ShaderResource.h"
+#include "DirectionalLight3D.h"
 
 namespace GEngine
 {
@@ -90,6 +92,20 @@ namespace GEngine
 
             standardMaterialResource->SetShaderVector3Value("viewPos", camera.position);
             standardMaterialResource->SetShaderVector4Value("ambient", ambient);
+
+            std::vector<std::shared_ptr<DirectionalLight3D>> directionalLights = _engine->GetEcs().GetAll<DirectionalLight3D>();
+
+            int lightIndex = 0;
+            for (const std::shared_ptr<DirectionalLight3D>& lightPtr : directionalLights)
+            {
+                DirectionalLight3D& light = *lightPtr;
+
+                standardMaterialResource->SetShaderIntValue(TextFormat("lights[%i].type", lightIndex), 0);
+                standardMaterialResource->SetShaderVector3Value(TextFormat("lights[%i].direction", lightIndex), {-1.0, -1.0, 1});
+                standardMaterialResource->SetShaderColorValue(TextFormat("lights[%i].color", lightIndex), light.GetColor());
+
+                ++lightIndex;
+            }
         }
 
         _engine->GetRenderer3D().DrawMesh(meshResource, *materialResource, transform);

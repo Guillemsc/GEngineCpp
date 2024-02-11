@@ -5,7 +5,7 @@
 template <typename T>
 std::optional<std::shared_ptr<T>> GEngine::Entity::GetFirstParentOfType()
 {
-    std::optional<std::shared_ptr<Entity>>& parent = _parent;
+    std::optional<std::shared_ptr<Entity>> parent = _parent;
 
     while(parent.has_value())
     {

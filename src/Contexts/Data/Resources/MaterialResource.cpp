@@ -23,6 +23,7 @@ namespace GEngine
 
     void MaterialResource::SetShader(ShaderResource &shader)
     {
+        _intValues.clear();
         _floatValues.clear();
         _vector3Values.clear();
         _vector4Values.clear();
@@ -50,6 +51,13 @@ namespace GEngine
 
         ShaderResource& shaderResource = _shader->get();
         return shaderResource.GetUniformIndex(locationName);
+    }
+
+    void MaterialResource::SetShaderIntValue(const std::string &locationName, int value)
+    {
+        int locationIndex = GetShaderValuePosition(locationName);
+        _locationIntValues[locationName] = value;
+        SetShaderIntValue(locationIndex, value);
     }
 
     void MaterialResource::SetShaderFloatValue(const std::string &locationName, float value)
@@ -121,27 +129,32 @@ namespace GEngine
 
         ShaderResource& shaderResource = _shader->get();
 
-        for (auto & floatLocation : _floatValues)
+        for (auto& intLocation : _intValues)
+        {
+            shaderResource.SetIntUniform(intLocation.first, intLocation.second);
+        }
+
+        for (auto& floatLocation : _floatValues)
         {
             shaderResource.SetFloatUniform(floatLocation.first, floatLocation.second);
         }
 
-        for (auto & _vector3Location : _vector3Values)
+        for (auto& _vector3Location : _vector3Values)
         {
             shaderResource.SetVector3Uniform(_vector3Location.first, _vector3Location.second);
         }
 
-        for (auto & _vector4Location : _vector4Values)
+        for (auto& _vector4Location : _vector4Values)
         {
             shaderResource.SetVector4Uniform(_vector4Location.first, _vector4Location.second);
         }
 
-        for (auto & _matrixLocation : _matrixValues)
+        for (auto& _matrixLocation : _matrixValues)
         {
             shaderResource.SetMatrixUniform(_matrixLocation.first, _matrixLocation.second);
         }
 
-        for (auto & _textureLocation : _textureValues)
+        for (auto& _textureLocation : _textureValues)
         {
             shaderResource.SetTextureUniform(_textureLocation.first, _textureLocation.second);
         }
@@ -242,6 +255,11 @@ namespace GEngine
 
     void MaterialResource::ResetValuesFromLocations()
     {
+        for (auto & intLocation : _locationIntValues)
+        {
+            SetShaderIntValue(intLocation.first, intLocation.second);
+        }
+
         for (auto & floatLocation : _locationFloatValues)
         {
             SetShaderFloatValue(floatLocation.first, floatLocation.second);
@@ -266,6 +284,11 @@ namespace GEngine
         {
             SetShaderTextureValue(_textureLocation.first, _textureLocation.second);
         }
+    }
+
+    void MaterialResource::SetShaderIntValue(int location, int value)
+    {
+        _intValues[location] = value;
     }
 
     void MaterialResource::SetShaderFloatValue(int location, float value)
