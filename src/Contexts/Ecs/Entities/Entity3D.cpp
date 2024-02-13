@@ -9,7 +9,10 @@ namespace GEngine
 {
     Entity3D::Entity3D(const Engine* engine, EntityType entityType) : Entity(engine, entityType)
     {
+        _parentChangedEvent.Subscribe([this](){ WhenParentChanged(); });
 
+        RecalculateLocalMatrix();
+        RecalculateWorldValues();
     }
 
     void Entity3D::SetLocalPosition(Vector3 localPosition)
@@ -89,6 +92,9 @@ namespace GEngine
         _localRotationDegrees = localRotationDegrees;
         _localRotationRadians = MathExtensions::DegreesToRadians(_localRotationDegrees);
         _localRotation = QuaternionFromEuler(_localRotationRadians.x, _localRotationRadians.y, _localRotationRadians.z);
+
+        RecalculateLocalMatrix();
+        RecalculateChildHirearchyWorldValues();
     }
 
     void Entity3D::SetWorldRotation(Quaternion worldRotation)
@@ -136,6 +142,12 @@ namespace GEngine
         RecalculateChildHirearchyWorldValues();
     }
 
+    void Entity3D::AddLocalRotationDegrees(Vector3 localRotationDegrees)
+    {
+        Vector3 newRotation = Vector3Add(_localRotationDegrees, localRotationDegrees);
+        SetLocalRotationDegrees(newRotation);
+    }
+
     Matrix Entity3D::GetWorldMatrix() const
     {
         return _worldMatrix;
@@ -156,14 +168,46 @@ namespace GEngine
         return _worldScale;
     }
 
-    Vector3 Entity3D::GetWorldForward()
+
+    Vector3 Entity3D::GetWorldX() const
     {
-        return Vector3
+        Vector3 direction =
+        {
+            1 - 2 * (_worldRotation.y * _worldRotation.y + _worldRotation.z * _worldRotation.z),
+            2 * (_worldRotation.x * _worldRotation.y + _worldRotation.w * _worldRotation.z),
+            2 * (_worldRotation.x * _worldRotation.z - _worldRotation.w * _worldRotation.y)
+        };
+
+        return Vector3Normalize(direction);
+    }
+
+    Vector3 Entity3D::GetWorldY() const
+    {
+        Vector3 direction =
+        {
+            2 * (_worldRotation.x * _worldRotation.y - _worldRotation.w * _worldRotation.z),
+            1 - 2 * (_worldRotation.x * _worldRotation.x + _worldRotation.z * _worldRotation.z),
+            2 * (_worldRotation.y * _worldRotation.z + _worldRotation.w * _worldRotation.x)
+        };
+
+        return Vector3Normalize(direction);
+    }
+
+    Vector3 Entity3D::GetWorldZ() const
+    {
+        Vector3 direction =
         {
             2 * (_worldRotation.x * _worldRotation.z + _worldRotation.w * _worldRotation.y),
             2 * (_worldRotation.y * _worldRotation.z - _worldRotation.w * _worldRotation.x),
             1 - 2 * (_worldRotation.x * _worldRotation.x + _worldRotation.y * _worldRotation.y)
         };
+
+        return Vector3Normalize(direction);
+    }
+
+    void Entity3D::WhenParentChanged()
+    {
+        RecalculateChildHirearchyWorldValues();
     }
 
     void Entity3D::RecalculateLocalMatrix()

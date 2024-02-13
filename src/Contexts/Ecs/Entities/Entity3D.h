@@ -30,14 +30,20 @@ namespace GEngine
 
         void SetLocalScale(Vector3 localScale);
 
+        void AddLocalRotationDegrees(Vector3 localRotationDegrees);
+
         Matrix GetWorldMatrix() const;
         Vector3 GetWorldPosition() const;
         Vector3 GetWorldRotationRadians() const;
         Vector3 GetWorldScale();
 
-        Vector3 GetWorldForward();
+        Vector3 GetWorldX() const;
+        Vector3 GetWorldY() const;
+        Vector3 GetWorldZ() const;
 
     private:
+        void WhenParentChanged();
+
         void RecalculateLocalMatrix();
         void RecalculateWorldValues();
         void RecalculateChildHirearchyWorldValues();

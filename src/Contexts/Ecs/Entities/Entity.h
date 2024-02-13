@@ -22,7 +22,7 @@ namespace GEngine
         friend class EcsModule;
 
     public:
-        Entity(const Engine* engine);
+        explicit Entity(const Engine* engine);
         virtual ~Entity() = default;
 
         void Dispose();

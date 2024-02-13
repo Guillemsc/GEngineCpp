@@ -14,6 +14,7 @@ namespace GEngine
         BOX_PRIMITIVE_RENDERER_3D,
         MESH_RESOURCE_RENDERER_3D,
         DIRECTIONAL_LIGHT_3D,
+        AXIS_RENDERER_3D,
     };
 
 } // GEngine

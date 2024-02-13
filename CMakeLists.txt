@@ -76,6 +76,8 @@ add_library(gengine
         src/Contexts/Game/Modules/GameModule.h
         src/Contexts/Game/Games/Game.cpp
         src/Contexts/Game/Games/Game.h
+        src/Contexts/Ecs/Entities/AxisRenderer3D.cpp
+        src/Contexts/Ecs/Entities/AxisRenderer3D.h
 )
 
 add_subdirectory(external)

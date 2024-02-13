@@ -56,11 +56,11 @@ namespace GEngine
 
         BeginMode3D(camera);
 
+        //DrawCubeWires({0, 0, 0}, 2.0f, 2.0f, 2.0f, MAROON);
+
+        //DrawGrid(10, 1.0f);
+
         _renderQueue.Render(camera);
-
-        DrawCubeWires({0, 0, 0}, 2.0f, 2.0f, 2.0f, MAROON);
-
-        DrawGrid(10, 1.0f);
 
         EndMode3D();
 

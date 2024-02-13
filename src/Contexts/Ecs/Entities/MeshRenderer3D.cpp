@@ -100,8 +100,10 @@ namespace GEngine
             {
                 DirectionalLight3D& light = *lightPtr;
 
+                Vector3 forward = light.GetWorldZ();
+
                 standardMaterialResource->SetShaderIntValue(TextFormat("lights[%i].type", lightIndex), 0);
-                standardMaterialResource->SetShaderVector3Value(TextFormat("lights[%i].direction", lightIndex), {-1.0, -1.0, 1});
+                standardMaterialResource->SetShaderVector3Value(TextFormat("lights[%i].direction", lightIndex), forward);
                 standardMaterialResource->SetShaderColorValue(TextFormat("lights[%i].color", lightIndex), light.GetColor());
 
                 ++lightIndex;
